@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nepal — Roof of the World</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #c8102e;
+      --blue: #003893;
+      --gold: #d4a843;
+      --dark: #12100e;
+      --light: #faf8f4;
+      --muted: #7a7570;
+      --border: #e8e2d8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      background: var(--light);
+      color: var(--dark);
+      line-height: 1.75;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 99;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 5vw;
+      background: rgba(250,248,244,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+      display: flex; align-items: center; gap: 0.7rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; font-weight: 700;
+      text-decoration: none; color: var(--dark);
+    }
+    .flag {
+      display: flex; flex-direction: column; gap: 0;
+      width: 18px; height: 22px; position: relative;
+    }
+    .flag-top {
+      width: 0; height: 0;
+      border-left: 9px solid var(--red);
+      border-right: 9px solid transparent;
+      border-bottom: 11px solid transparent;
+      border-top: 11px solid var(--red);
+    }
+    .flag-bot {
+      width: 0; height: 0;
+      border-left: 12px solid var(--red);
+      border-right: 12px solid transparent;
+      border-bottom: 0;
+      border-top: 11px solid var(--red);
+      margin-top: -1px;
+    }
+    .nepal-flag { font-size: 1.3rem; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--muted);
+      font-size: 0.8rem; letter-spacing: 0.12em;
+      text-transform: uppercase; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--dark); }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      background: linear-gradient(160deg, #1a1208 0%, #2e1a0e 40%, #1c2a3a 100%);
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 8rem 5vw 5rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-mountains {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 45%;
+    }
+    .hero-mountains svg { width: 100%; height: 100%; }
+    .hero-tag {
+      font-size: 0.72rem; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 9vw, 7.5rem);
+      font-weight: 400; line-height: 0.95;
+      color: #fff;
+      animation: fadeUp 0.9s 0.1s ease both;
+    }
+    .hero-title em { font-style: italic; color: var(--gold); }
+    .hero-sub {
+      max-width: 420px; margin-top: 2rem;
+      color: rgba(255,255,255,0.65);
+      font-size: 1rem; line-height: 1.8;
+      animation: fadeUp 1s 0.2s ease both;
+    }
+    .hero-stats {
+      display: flex; gap: 3rem; margin-top: 3.5rem;
+      animation: fadeUp 1s 0.3s ease both;
+    }
+    .hero-stat .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; color: #fff; font-weight: 700;
+    }
+    .hero-stat .lbl {
+      font-size: 0.72rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(255,255,255,0.45);
+    }
+
+    /* SECTIONS */
+    section { padding: 6rem 5vw; }
+    .section-tag {
+      font-size: 0.68rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 0.8rem; font-weight: 500;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400; line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+    .section-title em { font-style: italic; color: var(--muted); }
+    hr.accent {
+      border: none; border-top: 1px solid var(--gold);
+      width: 48px; margin-bottom: 2rem;
+    }
+
+    /* ABOUT */
+    #about {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .about-text p { color: var(--muted); margin-bottom: 1.1rem; }
+    .about-img {
+      background: #2e1a0e;
+      border-radius: 2px;
+      aspect-ratio: 4/5;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 7rem; position: relative; overflow: hidden;
+    }
+    .about-img-emoji { position: relative; z-index: 1; filter: drop-shadow(0 4px 24px rgba(0,0,0,0.5)); }
+    .about-img::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #2e1a0e 0%, #1c2a3a 100%);
+    }
+    .badge {
+      display: inline-block;
+      background: var(--red); color: #fff;
+      font-size: 0.72rem; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 0.3rem 0.9rem;
+      border-radius: 2px; margin-bottom: 1.2rem;
+    }
+
+    /* HIGHLIGHTS */
+    #highlights { border-bottom: 1px solid var(--border); }
+    .cards {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem; margin-top: 2.5rem;
+    }
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 4px; padding: 2rem 1.6rem;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .card:hover { border-color: var(--gold); transform: translateY(-4px); }
+    .card-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; margin-bottom: 0.6rem;
+    }
+    .card-body { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+
+    /* PEAKS */
+    #peaks {
+      background: var(--dark); color: #fff;
+    }
+    #peaks .section-title em { color: rgba(255,255,255,0.35); }
+    .peaks-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px; background: rgba(255,255,255,0.08);
+      margin-top: 3rem;
+    }
+    .peak-item {
+      padding: 2rem 1.5rem;
+      background: var(--dark);
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: background 0.25s;
+    }
+    .peak-item:hover { background: #1e1b16; }
+    .peak-num {
+      font-size: 0.7rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+    .peak-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; margin-bottom: 0.3rem;
+    }
+    .peak-elev {
+      font-size: 0.85rem; color: rgba(255,255,255,0.45);
+    }
+
+    /* CULTURE */
+    #culture {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .culture-img {
+      aspect-ratio: 1;
+      background: linear-gradient(135deg, #2e1a0e, #c8102e33);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 6rem;
+    }
+    .culture-list { list-style: none; margin-top: 1.5rem; }
+    .culture-list li {
+      padding: 1rem 0;
+      border-top: 1px solid var(--border);
+      display: flex; gap: 1rem; align-items: flex-start;
+      font-size: 0.92rem;
+    }
+    .culture-list li:last-child { border-bottom: 1px solid var(--border); }
+    .culture-list .dot {
+      width: 6px; height: 6px;
+      background: var(--gold); border-radius: 50%;
+      flex-shrink: 0; margin-top: 0.55rem;
+    }
+    .culture-list .text b { display: block; font-weight: 500; margin-bottom: 0.2rem; }
+    .culture-list .text span { color: var(--muted); font-size: 0.85rem; }
+
+    /* VISIT */
+    #visit { border-bottom: 1px solid var(--border); }
+    .visit-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem; margin-top: 2.5rem;
+    }
+    .visit-card {
+      padding: 1.8rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      display: flex; gap: 1.2rem; align-items: flex-start;
+    }
+    .visit-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: #f0ebe3;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+    .visit-title { font-weight: 500; margin-bottom: 0.3rem; }
+    .visit-body { color: var(--muted); font-size: 0.87rem; }
+
+    /* FOOTER */
+    footer {
+      padding: 2.5rem 5vw;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.78rem; color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; color: var(--dark);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      #about, #culture { grid-template-columns: 1fr; }
+      .cards, .peaks-grid, .visit-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 1.5rem; }
+      .about-img { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="#">🏔 Nepal</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#highlights">Highlights</a></li>
+    <li><a href="#peaks">Peaks</a></li>
+    <li><a href="#visit">Visit</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-tag">Discover · Experience · Explore</div>
+  <h1 class="hero-title">Roof of<br>the <em>World</em></h1>
+  <p class="hero-sub">A landlocked Himalayan kingdom where ancient temples meet soaring summits — Nepal is a destination unlike any other.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">8,849m</div><div class="lbl">Mt. Everest</div></div>
+    <div class="hero-stat"><div class="num">8</div><div class="lbl">8000m+ peaks</div></div>
+    <div class="hero-stat"><div class="num">29M+</div><div class="lbl">Population</div></div>
+  </div>
+  <div class="hero-mountains">
+    <svg viewBox="0 0 1440 300" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="0,300 200,120 350,200 500,60 680,180 820,30 960,140 1100,50 1280,160 1440,80 1440,300" fill="#1a1208" opacity="0.9"/>
+      <polygon points="0,300 180,160 300,220 420,100 560,200 700,80 860,160 1000,90 1160,170 1320,110 1440,150 1440,300" fill="#12100e"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-text">
+    <div class="badge">About Nepal</div>
+    <h2 class="section-title">A land of <em>wonder</em></h2>
+    <hr class="accent"/>
+    <p>Nepal is a small, landlocked country nestled between China and India, home to some of the world's most dramatic landscapes. From the tropical lowlands of the Terai to the icy peaks of the Himalayas, its geography is staggering in its variety.</p>
+    <p>Kathmandu, the capital, is a vibrant mix of ancient shrines, bustling bazaars, and modern life. The city's Durbar Squares and living goddess tradition offer a window into a culture that has flourished for over 2,000 years.</p>
+    <p>Nepal is the birthplace of Siddhartha Gautama — the Buddha — and a spiritual crossroads for Hinduism and Buddhism, evident in the prayer flags, stupas, and temples that dot the land.</p>
+  </div>
+  <div class="about-img">
+    <span class="about-img-emoji">🏔️</span>
+  </div>
+</section>
+
+<!-- HIGHLIGHTS -->
+<section id="highlights">
+  <div class="section-tag">Must-See</div>
+  <h2 class="section-title">Top Highlights</h2>
+  <div class="cards">
+    <div class="card">
+      <span class="card-icon">🗼</span>
+      <div class="card-title">Boudhanath Stupa</div>
+      <p class="card-body">One of the largest stupas in the world, a UNESCO World Heritage Site and the spiritual heart of Tibetan Buddhism in Nepal.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🌿</span>
+      <div class="card-title">Chitwan National Park</div>
+      <p class="card-body">Home to one-horned rhinos, Bengal tigers, and wild elephants. One of Asia's finest wildlife reserves in the lush Terai lowlands.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🏔️</span>
+      <div class="card-title">Annapurna Circuit</div>
+      <p class="card-body">A legendary trekking route circling the Annapurna massif — through rice terraces, alpine meadows, and high mountain passes.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🛕</span>
+      <div class="card-title">Pashupatinath Temple</div>
+      <p class="card-body">Nepal's most sacred Hindu temple on the banks of the Bagmati River. A place of pilgrimage, ritual, and spiritual significance.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🏘️</span>
+      <div class="card-title">Bhaktapur Durbar Square</div>
+      <p class="card-body">A beautifully preserved medieval city with extraordinary Newari architecture, pottery squares, and a timeless old-world atmosphere.</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🌅</span>
+      <div class="card-title">Pokhara & Phewa Lake</div>
+      <p class="card-body">A serene lakeside city with stunning views of the Annapurna range, the gateway to adventure and a place of quiet beauty.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PEAKS -->
+<section id="peaks">
+  <div class="section-tag">The Himalayas</div>
+  <h2 class="section-title">Legendary <em>Peaks</em></h2>
+  <div class="peaks-grid">
+    <div class="peak-item">
+      <div class="peak-num">No. 1</div>
+      <div class="peak-name">Mount Everest</div>
+      <div class="peak-elev">8,849 m · Highest on Earth</div>
+    </div>
+    <div class="peak-item">
+      <div class="peak-num">No. 3</div>
+      <div class="peak-name">Kangchenjunga</div>
+      <div class="peak-elev">8,586 m · Nepal–India border</div>
+    </div>
+    <div class="peak-item">
+      <div class="peak-num">No. 4</div>
+      <div class="peak-name">Lhotse</div>
+      <div class="peak-elev">8,516 m · Everest massif</div>
+    </div>
+    <div class="peak-item">
+      <div class="peak-num">No. 8</div>
+      <div class="peak-name">Manaslu</div>
+      <div class="peak-elev">8,163 m · "Mountain of Spirit"</div>
+    </div>
+  </div>
+</section>
+
+<!-- CULTURE -->
+<section id="culture">
+  <div class="culture-img">🪔</div>
+  <div>
+    <div class="section-tag">Culture & Festivals</div>
+    <h2 class="section-title">Rich in <em>tradition</em></h2>
+    <hr class="accent"/>
+    <p style="color: var(--muted); margin-bottom: 0.5rem;">Nepal's calendar overflows with festivals that bring colour, music, and devotion to every corner of the country.</p>
+    <ul class="culture-list">
+      <li><span class="dot"></span><div class="text"><b>Dashain</b><span>The biggest Hindu festival — 15 days of family, feasting, and the blessings of the goddess Durga.</span></div></li>
+      <li><span class="dot"></span><div class="text"><b>Tihar (Diwali)</b><span>The "festival of lights" — five days of lamps, music, and honoring deities, crows, dogs, and siblings.</span></div></li>
+      <li><span class="dot"></span><div class="text"><b>Holi</b><span>A joyful explosion of colour marking the arrival of spring, celebrated across Nepal and India.</span></div></li>
+      <li><span class="dot"></span><div class="text"><b>Buddha Jayanti</b><span>Celebrating the birth of the Buddha with candlelit processions and prayers at Lumbini and Boudhanath.</span></div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- VISIT -->
+<section id="visit">
+  <div class="section-tag">Practical Guide</div>
+  <h2 class="section-title">Plan Your Visit</h2>
+  <div class="visit-grid">
+    <div class="visit-card">
+      <div class="visit-icon">☀️</div>
+      <div>
+        <div class="visit-title">Best Time to Visit</div>
+        <p class="visit-body">October–November for trekking (post-monsoon, clear skies). March–May for spring blooms and rhododendrons.</p>
+      </div>
+    </div>
+    <div class="visit-card">
+      <div class="visit-icon">✈️</div>
+      <div>
+        <div class="visit-title">Getting There</div>
+        <p class="visit-body">Tribhuvan International Airport in Kathmandu is the main entry point, with connections from major Asian hubs.</p>
+      </div>
+    </div>
+    <div class="visit-card">
+      <div class="visit-icon">🪙</div>
+      <div>
+        <div class="visit-title">Currency & Budget</div>
+        <p class="visit-body">Nepali Rupee (NPR). Nepal is very affordable — budget travellers can live well on $30–50 USD per day.</p>
+      </div>
+    </div>
+    <div class="visit-card">
+      <div class="visit-icon">🎫</div>
+      <div>
+        <div class="visit-title">Visas</div>
+        <p class="visit-body">Most nationalities can obtain a visa on arrival at Tribhuvan Airport. Trekking permits are required for certain routes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">🏔 Nepal</div>
+  <div>A small tribute to a magnificent country · 2026</div>
+</footer>
+
+</body>
+</html>
